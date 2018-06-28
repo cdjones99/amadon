@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Home</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% load static %}
+<link rel="stylesheet" href="{% static 'app/css/home.css' %}">
+<link rel="stylesheet" href="{% static 'app/js/home.js' %}">
+</head>
+
+<body>
+	<h1>Welcome, {{request.session.name}} </h1>
+	<a href="/item">Add A Product</a>
+	<a href="/renderCart">Shopping Cart</a>
+	<a href="/logout">Logout</a>
+	<table>
+		<tr>
+			<th>Item Name</th>
+			<th>Price</th>
+			<th>In Stock</th>
+			<th>Add To Cart</th>
+		</tr>
+		{% for items in item %}
+		<tr>
+			<td>{{items.name}}</td>
+			<td>${{items.price}}</td>
+			<td>{{items.stock}}</td>
+			<td>
+				<form action="/shopping_cart/{{items.id}}" method="POST">
+					<input type="submit" value="Add to Cart">
+					{%csrf_token%}
+				</form>
+			</td>
+		</tr>
+		{%endfor%}
+</body>
+
+</html>

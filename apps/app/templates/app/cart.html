@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+</head>
+<body>
+    <h1>Your Shopping Cart</h1>
+    <a href="/home">Home</a>
+    {% for orders in cart %}
+    <p>Product:  {{orders.item.name}}</p>
+    <p>${{orders.item.price}}</p>
+    <p>{{orders.item.quantity}}</p>
+    <p>Date Needed by:<input type="date" name="date_by"></p>
+    <select>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+    </select><br><br>
+    <form action="/delete/{{orders.id}}" method="POST">
+        <input type="submit" name="delete" value="Delete"><br><br>
+    {%csrf_token%}
+    {%endfor%}
+    </form>
+    <form action="/purchase" method="POST">
+        <br><br><input type="submit" name="check_out" value="Check Out">
+    {%csrf_token%}
+    </form>
+</body>
+</html>
